@@ -1,4 +1,4 @@
-package com.nstudio.hackernews.view
+package com.nstudio.hackernews.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -13,7 +13,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        showFragment(StoriesFragment::class.java.simpleName)
+        if (savedInstanceState==null){
+            showFragment(StoriesFragment::class.java.simpleName)
+        }
     }
 
     private fun showFragment(name: String) {

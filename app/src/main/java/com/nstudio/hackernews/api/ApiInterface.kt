@@ -1,4 +1,4 @@
-package com.nstudio.hackernews.rest
+package com.nstudio.hackernews.api
 
 import okhttp3.ResponseBody
 import retrofit2.Call

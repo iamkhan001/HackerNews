@@ -1,87 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+        app:cardUseCompatPadding="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_normal"
-        android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/tvTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ellipsize="end"
-        android:textColor="@color/gray_dark"
-        android:maxLines="2"/>
+        android:layout_height="wrap_content">
 
 
-    <TextView
-            android:id="@+id/tvStoryBy"
-            android:layout_below="@id/tvTitle"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
+    <RelativeLayout
+            android:padding="@dimen/space_large"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="1"/>
+            android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/tvTime"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/tvStoryBy"
-            android:layout_width="100dp"
-            android:layout_marginTop="@dimen/space_normal"
-            android:drawableStart="@drawable/ic_clock"
-            android:drawableLeft="@drawable/ic_clock"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:drawablePadding="@dimen/space_normal"
-            android:gravity="center_vertical"
-            android:maxLines="2"/>
-
-    <TextView
-            android:id="@+id/tvComment"
-            android:layout_toStartOf="@id/tvTime"
-            android:layout_toLeftOf="@id/tvTime"
-            android:layout_below="@id/tvStoryBy"
-            android:layout_width="80dp"
-            android:drawablePadding="@dimen/space_normal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/space_normal"
-            android:drawableStart="@drawable/ic_comment"
-            android:drawableLeft="@drawable/ic_comment"
-            android:layout_marginEnd="@dimen/space_small"
-            android:layout_marginRight="@dimen/space_small"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"/>
-
-    <TextView
-            android:id="@+id/tvVotes"
-            android:layout_below="@id/tvStoryBy"
-            android:layout_width="100dp"
-            android:drawablePadding="@dimen/space_normal"
-            android:gravity="center_vertical"
-            android:layout_marginTop="@dimen/space_normal"
-            android:drawableStart="@drawable/ic_user"
-            android:drawableLeft="@drawable/ic_user"
-            android:layout_marginEnd="@dimen/space_small"
-            android:layout_marginRight="@dimen/space_small"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:maxLines="2"/>
-
-    <TextView
-            android:id="@+id/tvOther"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/tvVotes"
-            android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/space_normal"
-            android:layout_height="wrap_content"
-            android:ellipsize="end"/>
+        <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:textColor="@color/gray_dark"
+                android:maxLines="2"/>
 
 
+        <TextView
+                android:id="@+id/tvStoryBy"
+                android:layout_below="@id/tvTitle"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"/>
 
-</RelativeLayout>
+        <TextView
+                android:id="@+id/tvTime"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tvStoryBy"
+                android:layout_width="100dp"
+                android:layout_marginTop="@dimen/space_normal"
+                android:drawableStart="@drawable/ic_clock"
+                android:drawableLeft="@drawable/ic_clock"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:drawablePadding="@dimen/space_normal"
+                android:gravity="center_vertical"
+                android:maxLines="2"/>
+
+        <TextView
+                android:id="@+id/tvComment"
+                android:layout_toStartOf="@id/tvTime"
+                android:layout_toLeftOf="@id/tvTime"
+                android:layout_below="@id/tvStoryBy"
+                android:layout_width="80dp"
+                android:drawablePadding="@dimen/space_normal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/space_normal"
+                android:drawableStart="@drawable/ic_comment"
+                android:drawableLeft="@drawable/ic_comment"
+                android:layout_marginEnd="@dimen/space_small"
+                android:layout_marginRight="@dimen/space_small"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"/>
+
+        <TextView
+                android:id="@+id/tvVotes"
+                android:layout_below="@id/tvStoryBy"
+                android:layout_width="100dp"
+                android:drawablePadding="@dimen/space_normal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/space_normal"
+                android:drawableStart="@drawable/ic_up_arrow"
+                android:drawableLeft="@drawable/ic_up_arrow"
+                android:layout_marginEnd="@dimen/space_small"
+                android:layout_marginRight="@dimen/space_small"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"/>
+
+
+    </RelativeLayout>
+
+
+
+</android.support.v7.widget.CardView>

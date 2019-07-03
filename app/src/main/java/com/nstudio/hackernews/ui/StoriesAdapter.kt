@@ -1,4 +1,4 @@
-package com.nstudio.hackernews.view
+package com.nstudio.hackernews.ui
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
@@ -13,7 +13,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class StoriesAdapter(private val list: List<Story>) : RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
+class StoriesAdapter(private val list: MutableList<Story>?) : RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
 
 
     private var dateFormat: DateFormat? = null
@@ -32,12 +32,13 @@ class StoriesAdapter(private val list: List<Story>) : RecyclerView.Adapter<Stori
     }
 
     override fun getItemCount(): Int {
-       return list.size
+       return list!!.size
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder : MyViewHolder, pos: Int) {
-        val story = list[pos]
+
+        val story = list!![pos]
 
         holder.tvTitle.text = story.title
         holder.tvStoryBy.text = "By "+story.by
@@ -47,7 +48,6 @@ class StoriesAdapter(private val list: List<Story>) : RecyclerView.Adapter<Stori
 
         holder.tvTime.text = dateFormat!!.format(Date(story.time))
 
-        holder.tvOther.text = story.type+" "+story.deleted+" "+story.dead
 
     }
 
@@ -59,7 +59,6 @@ class StoriesAdapter(private val list: List<Story>) : RecyclerView.Adapter<Stori
         var tvVotes : TextView = itemView.findViewById(R.id.tvVotes)
         var tvComments : TextView = itemView.findViewById(R.id.tvComment)
         var tvTime : TextView = itemView.findViewById(R.id.tvTime)
-        var tvOther : TextView = itemView.findViewById(R.id.tvOther)
 
     }
 
