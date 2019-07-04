@@ -9,5 +9,7 @@ data class Comment(
     @SerializedName("parent") val parent: Int,
     @SerializedName("text") val text: String,
     @SerializedName("time") val time: Long,
-    @SerializedName("type") val type: String
+    @SerializedName("type") val type: String,
+    @SerializedName("deleted") val deleted: Boolean,
+    @SerializedName("dead") val dead: Boolean
     )

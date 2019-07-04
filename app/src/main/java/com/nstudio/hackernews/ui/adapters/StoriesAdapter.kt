@@ -1,30 +1,23 @@
-package com.nstudio.hackernews.ui
+package com.nstudio.hackernews.ui.adapters
 
 import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.nstudio.hackernews.R
 import com.nstudio.hackernews.model.Story
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.util.*
+
+/** adapter to show list of stories
+ * @param list >  list to load stories
+ * @param storyCLickListener > to get details from selected story
+ */
+class StoriesAdapter(private val list: MutableList<Story>?, private val storyCLickListener: OnStoryCLickListener) : RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
 
 
-class StoriesAdapter(private val list: MutableList<Story>?) : RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
-
-
-    private var dateFormat: DateFormat? = null
-
-
-
-    init {
-        dateFormat = SimpleDateFormat("dd MMM yy", Locale.ENGLISH)
-
-    }
-
+    private val timeNow = System.currentTimeMillis();
 
     override fun onCreateViewHolder(parent: ViewGroup, p1: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_story,parent,false)
@@ -46,7 +39,7 @@ class StoriesAdapter(private val list: MutableList<Story>?) : RecyclerView.Adapt
         holder.tvComments.text = ""+story.descendants
         holder.tvTitle.text = story.title
 
-        holder.tvTime.text = dateFormat!!.format(Date(story.time))
+        holder.tvTime.text = DateUtils.getRelativeTimeSpanString(story.time, timeNow, DateUtils.MINUTE_IN_MILLIS)
 
 
     }
@@ -60,8 +53,15 @@ class StoriesAdapter(private val list: MutableList<Story>?) : RecyclerView.Adapt
         var tvComments : TextView = itemView.findViewById(R.id.tvComment)
         var tvTime : TextView = itemView.findViewById(R.id.tvTime)
 
+        init {
+            itemView.setOnClickListener { storyCLickListener.onStoryCLick(adapterPosition) }
+        }
     }
 
+
+    interface OnStoryCLickListener{
+        fun onStoryCLick( pos: Int)
+    }
 
 
 }

@@ -1,8 +1,9 @@
-package com.nstudio.hackernews.ui
+package com.nstudio.hackernews.ui.fragments
 
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Context
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -20,20 +21,33 @@ import com.nstudio.hackernews.model.QueryResponse
 import com.nstudio.hackernews.model.Story
 import kotlinx.android.synthetic.main.fragment_stories.*
 import com.nstudio.hackernews.R
+import com.nstudio.hackernews.ui.adapters.StoriesAdapter
+import com.nstudio.hackernews.ui.viewModels.StoryViewModel
 import com.nstudio.hackernews.utils.NetworkState
 
+/**
+ * fragment to load stories
+ */
 
 class StoriesFragment : Fragment() {
 
-
-    private lateinit var storiesAdapter:StoriesAdapter
+    private lateinit var storiesAdapter: StoriesAdapter
     private lateinit var viewOffline : LinearLayout
     private lateinit var viewModel : StoryViewModel
+    private lateinit var storyCLickListener: StoriesAdapter.OnStoryCLickListener
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+        storyCLickListener = context as StoriesAdapter.OnStoryCLickListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        viewModel = ViewModelProviders.of(activity!!).get(StoryViewModel::class.java)
+
         return inflater.inflate(R.layout.fragment_stories, container, false)
     }
 
@@ -41,17 +55,15 @@ class StoriesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        viewModel = ViewModelProviders.of(this).get(StoryViewModel::class.java)
         val rvStories = view.findViewById<RecyclerView>(R.id.rvStories)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
         viewOffline = view.findViewById(R.id.viewOffline)
-
 
         progressBar.visibility = View.VISIBLE
 
         viewModel.storyList.observe(this,
             Observer<MutableList<Story>> { stories ->
-                storiesAdapter = StoriesAdapter(stories)
+                storiesAdapter = StoriesAdapter(stories, storyCLickListener)
 
                 val controller = AnimationUtils.loadLayoutAnimation(context, R.anim.layout_animation_from_bottom);
                 rvStories.layoutAnimation = controller
@@ -78,7 +90,9 @@ class StoriesFragment : Fragment() {
                         }
                         Snackbar.make(view, it.msg, Snackbar.LENGTH_SHORT).show()
                     }
+                    Event.COMMENT_ADD ->{
 
+                    }
 
                 }
             })
@@ -113,6 +127,8 @@ class StoriesFragment : Fragment() {
     }
 
     private fun loadStories(){
+        //check and load more stories if available
+
         if(NetworkState.isOnline(context!!)){
             if (progressBar.visibility != View.VISIBLE){
                 progressBar.visibility = View.VISIBLE

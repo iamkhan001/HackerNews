@@ -49,8 +49,6 @@ dependencies {
     // architecture components
     implementation "android.arch.lifecycle:extensions:$archComponentsVersion"
     implementation "android.arch.lifecycle:runtime:$archComponentsVersion"
-    implementation "android.arch.paging:runtime:$pagingVersion"
-    kapt "android.arch.lifecycle:compiler:$archComponentsVersion"
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

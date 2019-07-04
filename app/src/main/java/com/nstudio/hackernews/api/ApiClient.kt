@@ -1,8 +1,6 @@
 package com.nstudio.hackernews.api
 
-import android.content.Context
 import com.nstudio.hackernews.BuildConfig
-import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor

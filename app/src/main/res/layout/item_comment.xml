@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="@dimen/space_small">
+
+
+    <TextView
+            android:id="@+id/tvNameIcon"
+            android:background="@drawable/background_circle"
+            android:layout_width="@dimen/size_sm"
+            android:layout_height="@dimen/size_sm"
+            android:maxLength="1"
+            android:gravity="center"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/white"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_shape_comment"
+            android:layout_marginTop="@dimen/space_small"
+            android:layout_marginStart="@dimen/space_small"
+            android:layout_marginLeft="@dimen/size_small"
+            android:orientation="vertical">
+
+        <TextView
+                android:id="@+id/tvCommentBy"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_small"
+                android:paddingStart="@dimen/space_sm"
+                android:paddingEnd="@dimen/space_sm"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="@dimen/text_small" />
+
+
+        <TextView
+                android:id="@+id/tvComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray_dark"
+                android:padding="@dimen/space_sm"
+                android:ellipsize="end" />
+
+
+        <TextView
+                android:id="@+id/tvTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end"
+                android:padding="@dimen/space_sm"
+                android:textSize="@dimen/text_nano" />
+
+        <TextView
+                android:id="@+id/tvReplies"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/blue"
+                android:visibility="gone"
+                android:gravity="end|center_vertical"
+                android:drawableEnd="@drawable/ic_reply"
+                android:drawableRight="@drawable/ic_reply"
+                android:drawablePadding="@dimen/space_normal"
+                android:padding="@dimen/space_sm" />
+
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
