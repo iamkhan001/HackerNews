@@ -7,6 +7,7 @@ import android.text.Spanned
 
 
 
+@Suppress("DEPRECATION")
 class FormatHtml{
 
     companion object{

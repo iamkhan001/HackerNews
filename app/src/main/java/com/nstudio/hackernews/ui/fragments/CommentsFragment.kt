@@ -1,50 +1,40 @@
 package com.nstudio.hackernews.ui.fragments
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.os.Parcelable
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.ProgressBar
-import android.widget.TextView
+import android.widget.*
 import com.nstudio.hackernews.R
 import com.nstudio.hackernews.model.Comment
 import com.nstudio.hackernews.model.Event
 import com.nstudio.hackernews.model.QueryResponse
 import com.nstudio.hackernews.ui.adapters.CommentsAdapter
-import com.nstudio.hackernews.ui.adapters.StoriesAdapter
 import com.nstudio.hackernews.ui.viewModels.CommentViewModel
 import com.nstudio.hackernews.utils.NetworkState
-import kotlinx.android.synthetic.main.fragment_comments.*
 import java.util.ArrayList
 
 
 /**
  * Fragment to show comments on story
  */
-class CommentsFragment :Fragment(){
+@Suppress("NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS")
+class CommentsFragment : Fragment(){
 
     private lateinit var commentsAdapter: CommentsAdapter
     private lateinit var viewOffline : LinearLayout
     private lateinit var viewModel : CommentViewModel
-    private lateinit var storyCLickListener: StoriesAdapter.OnStoryCLickListener
-    private var storyTitle:String? = ""
+    private var storyTitle:String = ""
+    private lateinit var progressBar: ProgressBar
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-        storyCLickListener = context as StoriesAdapter.OnStoryCLickListener
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,8 +50,8 @@ class CommentsFragment :Fragment(){
 
 
 
-        val rvComments = view.findViewById<RecyclerView>(R.id.rvComments)
-        val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
+        val rvComments = view.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.rvComments)
+        progressBar = view.findViewById(R.id.progressBar)
         viewOffline = view.findViewById(R.id.viewOffline)
         progressBar.visibility = View.VISIBLE
 
@@ -78,7 +68,7 @@ class CommentsFragment :Fragment(){
 
         val ids = arguments!!.getIntegerArrayList("kids") ?: return
 
-        viewModel.setCommentIds(ids)
+        viewModel.setCommentIds(ids.toMutableList())
 
         Log.e(tag,"Comments Ids ${ids.size}")
 
@@ -127,9 +117,9 @@ class CommentsFragment :Fragment(){
                 }
             })
 
-        rvComments.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val layoutManager = LinearLayoutManager::class.java.cast(recyclerView.layoutManager)
+        rvComments.addOnScrollListener(object : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
+                val layoutManager = androidx.recyclerview.widget.LinearLayoutManager::class.java.cast(recyclerView.layoutManager)
                 val totalItemCount = layoutManager!!.itemCount
                 val lastVisible = layoutManager.findLastVisibleItemPosition()
 
@@ -151,7 +141,7 @@ class CommentsFragment :Fragment(){
             }
         }
 
-        btnRetry.setOnClickListener {
+        view.findViewById<Button>(R.id.btnRetry).setOnClickListener {
             loadComments()
         }
 
@@ -160,6 +150,10 @@ class CommentsFragment :Fragment(){
         }else{
             if(progressBar.visibility == View.VISIBLE){
                 progressBar.visibility = View.GONE
+            }
+            val list = savedInstanceState.getParcelableArrayList<Comment>("comments")
+            if (list!=null){
+                viewModel.setCommentList(list as MutableList<Comment>)
             }
         }
 
@@ -184,7 +178,6 @@ class CommentsFragment :Fragment(){
         fragmentTransaction.addToBackStack(tag)
         fragmentTransaction.commit()
 
-
     }
 
     private fun loadComments(){
@@ -206,6 +199,14 @@ class CommentsFragment :Fragment(){
         }
         viewOffline.visibility = View.VISIBLE
     }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val list = viewModel.getCommentList()
+        outState.putParcelableArrayList("comments",list as ArrayList<out Parcelable>)
+    }
+
+
 
 
 }

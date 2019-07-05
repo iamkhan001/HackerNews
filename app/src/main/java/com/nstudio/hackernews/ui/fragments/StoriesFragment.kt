@@ -1,14 +1,14 @@
 package com.nstudio.hackernews.ui.fragments
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Context
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.os.Parcelable
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,25 +21,40 @@ import com.nstudio.hackernews.model.QueryResponse
 import com.nstudio.hackernews.model.Story
 import kotlinx.android.synthetic.main.fragment_stories.*
 import com.nstudio.hackernews.R
+import com.nstudio.hackernews.model.Comment
 import com.nstudio.hackernews.ui.adapters.StoriesAdapter
 import com.nstudio.hackernews.ui.viewModels.StoryViewModel
 import com.nstudio.hackernews.utils.NetworkState
+import java.util.ArrayList
 
 /**
  * fragment to load stories
  */
 
+@Suppress("UNCHECKED_CAST")
 class StoriesFragment : Fragment() {
 
     private lateinit var storiesAdapter: StoriesAdapter
     private lateinit var viewOffline : LinearLayout
     private lateinit var viewModel : StoryViewModel
-    private lateinit var storyCLickListener: StoriesAdapter.OnStoryCLickListener
+    private var storyCLickListener: StoriesAdapter.OnStoryCLickListener = object : StoriesAdapter.OnStoryCLickListener {
+        override fun onStoryCLick(pos: Int) {
 
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
+            val fragment = StoryDetailsFragment()
 
-        storyCLickListener = context as StoriesAdapter.OnStoryCLickListener
+            val bundle = Bundle()
+            bundle.putInt("storyIndex",pos)
+
+            fragment.arguments = bundle
+
+            val tag:String = StoryDetailsFragment::class.java.simpleName
+            val fragmentTransaction = activity!!.supportFragmentManager.beginTransaction()
+            fragmentTransaction.add(R.id.fragmentView,fragment,tag)
+            fragmentTransaction.addToBackStack(tag)
+            fragmentTransaction.commit()
+
+        }
+
     }
 
     override fun onCreateView(
@@ -99,7 +114,7 @@ class StoriesFragment : Fragment() {
 
         rvStories.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                val layoutManager = LinearLayoutManager::class.java.cast(recyclerView.layoutManager)
+                val layoutManager = androidx.recyclerview.widget.LinearLayoutManager::class.java.cast(recyclerView.layoutManager)
                 val totalItemCount = layoutManager!!.itemCount
                 val lastVisible = layoutManager.findLastVisibleItemPosition()
 
@@ -120,6 +135,11 @@ class StoriesFragment : Fragment() {
         }else{
             if(progressBar.visibility == View.VISIBLE){
                 progressBar.visibility = View.GONE
+            }
+
+            val list = savedInstanceState.getParcelableArrayList<Story>("stories")
+            if (list!=null){
+                viewModel.setStoryList(list as MutableList<Story>)
             }
         }
 
@@ -147,5 +167,10 @@ class StoriesFragment : Fragment() {
         viewOffline.visibility = View.VISIBLE
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        val list = viewModel.getStoryList()
+        outState.putParcelableArrayList("stories",list as ArrayList<out Parcelable>)
+    }
 
 }

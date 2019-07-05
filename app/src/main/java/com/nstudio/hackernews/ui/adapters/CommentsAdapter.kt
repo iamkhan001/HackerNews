@@ -2,7 +2,7 @@ package com.nstudio.hackernews.ui.adapters
 
 import android.annotation.SuppressLint
 import android.graphics.Color
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +19,7 @@ import com.nstudio.hackernews.utils.FormatHtml
  * @param list list of comments
  * @param replayClickListener to load replies on comment if available
 */
-class CommentsAdapter(private val isReply:Boolean, private val list: MutableList<Comment>?, private val replayClickListener: OnReplayClickListener) : RecyclerView.Adapter<CommentsAdapter.MyViewHolder>(){
+class CommentsAdapter(private val isReply:Boolean, private val list: MutableList<Comment>?, private val replayClickListener: OnReplayClickListener) : androidx.recyclerview.widget.RecyclerView.Adapter<CommentsAdapter.MyViewHolder>(){
 
 
     private val timeNow = System.currentTimeMillis()

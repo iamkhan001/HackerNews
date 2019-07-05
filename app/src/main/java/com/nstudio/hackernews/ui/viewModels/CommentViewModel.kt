@@ -1,7 +1,7 @@
 package com.nstudio.hackernews.ui.viewModels
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import android.util.Log
 import com.nstudio.hackernews.api.ApiClient
 import com.nstudio.hackernews.api.ApiInterface
@@ -102,5 +102,12 @@ class CommentViewModel : ViewModel(){
 
     }
 
+    public fun setCommentList(comments:MutableList<Comment>){
+        commentList.value = comments
+    }
+
+    public fun getCommentList():MutableList<Comment>{
+        return commentList.value!!
+    }
 
 }

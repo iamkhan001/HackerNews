@@ -1,7 +1,7 @@
 package com.nstudio.hackernews.ui.adapters
 
 import android.annotation.SuppressLint
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -14,7 +14,7 @@ import com.nstudio.hackernews.model.Story
  * @param list >  list to load stories
  * @param storyCLickListener > to get details from selected story
  */
-class StoriesAdapter(private val list: MutableList<Story>?, private val storyCLickListener: OnStoryCLickListener) : RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
+class StoriesAdapter(private val list: MutableList<Story>?, private val storyCLickListener: OnStoryCLickListener) : androidx.recyclerview.widget.RecyclerView.Adapter<StoriesAdapter.MyViewHolder>(){
 
 
     private val timeNow = System.currentTimeMillis();
@@ -45,7 +45,7 @@ class StoriesAdapter(private val list: MutableList<Story>?, private val storyCLi
     }
 
 
-    inner class MyViewHolder( itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class MyViewHolder( itemView: View) : androidx.recyclerview.widget.RecyclerView.ViewHolder(itemView) {
 
         var tvTitle : TextView = itemView.findViewById(R.id.tvTitle)
         var tvStoryBy : TextView = itemView.findViewById(R.id.tvStoryBy)
